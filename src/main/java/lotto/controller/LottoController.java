@@ -25,19 +25,20 @@ public class LottoController {
 
     public void run() {
         // 로또 구매
-        String lottoPurchaseAmount = inputView.readLottoPurchaseAmount();
-        Money money = new Money(lottoPurchaseAmount);
+        String purchaseAmountInput = inputView.readLottoPurchaseAmount();
+        int purchaseAmount = InputParser.parseInt(purchaseAmountInput);
+        Money money = new Money(purchaseAmount);
         Lottos lottos = lottoMachine.issue(money);
         outputView.printLottos(lottos);
 
         // 당첨 번호 입력
         String winningNumbersInput = inputView.readWinningNumbers();
-        List<Integer> winningNumbers = InputParser.parseLottoNumbers(winningNumbersInput);
+        List<Integer> winningNumbers = InputParser.parseNumbers(winningNumbersInput);
         Lotto winningLotto = new Lotto(winningNumbers);
 
         // 보너스 번호 입력
         String bonusNumberInput = inputView.readBonusNumber();
-        int bonusNumber = InputParser.parseBonusNumber(bonusNumberInput);
+        int bonusNumber = InputParser.parseInt(bonusNumberInput);
         BonusNumberValidator.validate(winningLotto, bonusNumber);
     }
 }
