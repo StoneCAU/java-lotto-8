@@ -30,7 +30,7 @@ public class InputParser {
 
     private static void validateNotEmpty(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호를 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] 입력값을 입력해주세요.");
         }
     }
 }
