@@ -1,9 +1,6 @@
 package lotto.controller;
 
-import lotto.domain.Lotto;
-import lotto.domain.LottoMachine;
-import lotto.domain.Lottos;
-import lotto.domain.Money;
+import lotto.domain.*;
 import lotto.parser.InputParser;
 import lotto.validator.BonusNumberValidator;
 import lotto.view.InputView;
@@ -40,5 +37,9 @@ public class LottoController {
         String bonusNumberInput = inputView.readBonusNumber();
         int bonusNumber = InputParser.parseInt(bonusNumberInput);
         BonusNumberValidator.validate(winningLotto, bonusNumber);
+
+        // 당첨 내역 출력
+        LottoResult result = lottos.calculateResult(winningLotto, bonusNumber);
+        outputView.printResult(result);
     }
 }
