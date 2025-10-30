@@ -19,6 +19,12 @@ public class Lotto {
         return numbers.contains(number);
     }
 
+    public int countMatches(Lotto winningLotto) {
+        return (int) numbers.stream()
+                .filter(winningLotto.getNumbers()::contains)
+                .count();
+    }
+
     private void validate(List<Integer> numbers) {
         validateSize(numbers);
         validateRange(numbers);
