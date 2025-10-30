@@ -21,28 +21,62 @@ public class LottoController {
     }
 
     public void run() {
-        // 로또 구매
-        String purchaseAmountInput = inputView.readLottoPurchaseAmount();
-        int purchaseAmount = InputParser.parseInt(purchaseAmountInput);
-        Money money = new Money(purchaseAmount);
+        Money money = inputPurchaseAmount();
+        Lottos lottos = purchaseLottos(money);
+
+        Lotto winningLotto = inputWinningNumbers();
+        int bonusNumber = inputBonusNumber(winningLotto);
+
+        LottoResult result = lottos.calculateResult(winningLotto, bonusNumber);
+        printResults(result, money);
+    }
+
+    private Money inputPurchaseAmount() {
+        while (true) {
+            try {
+                String input = inputView.readLottoPurchaseAmount();
+                int amount = InputParser.parseInt(input);
+                return new Money(amount);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private Lottos purchaseLottos(Money money) {
         Lottos lottos = lottoMachine.issue(money);
         outputView.printLottos(lottos);
+        return lottos;
+    }
 
-        // 당첨 번호 입력
-        String winningNumbersInput = inputView.readWinningNumbers();
-        List<Integer> winningNumbers = InputParser.parseNumbers(winningNumbersInput);
-        Lotto winningLotto = new Lotto(winningNumbers);
+    private Lotto inputWinningNumbers() {
+        while (true) {
+            try {
+                String input = inputView.readWinningNumbers();
+                List<Integer> numbers = InputParser.parseNumbers(input);
+                return new Lotto(numbers);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
 
-        // 보너스 번호 입력
-        String bonusNumberInput = inputView.readBonusNumber();
-        int bonusNumber = InputParser.parseInt(bonusNumberInput);
-        BonusNumberValidator.validate(winningLotto, bonusNumber);
+    private int inputBonusNumber(Lotto winningLotto) {
+        while (true) {
+            try {
+                String input = inputView.readBonusNumber();
+                int bonusNumber = InputParser.parseInt(input);
+                BonusNumberValidator.validate(winningLotto, bonusNumber);
+                return bonusNumber;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
 
-        // 당첨 내역 출력
-        LottoResult result = lottos.calculateResult(winningLotto, bonusNumber);
+    private void printResults(LottoResult result, Money money) {
         outputView.printResult(result);
 
-        // 수익률 출력
         double profitRate = money.calculateProfitRate(result.getTotalPrize());
         outputView.printProfitRate(profitRate);
     }
