@@ -10,24 +10,19 @@ public class InputParser {
     private InputParser() {
     }
 
-    public static List<Integer> parseLottoNumbers(String input) {
+    public static List<Integer> parseNumbers(String input) {
         validateNotEmpty(input);
-
         return Arrays.stream(input.split(DELIMITER))
                 .map(String::trim)
-                .map(InputParser::parseToInt)
+                .map(InputParser::parseInt)
                 .toList();
     }
 
-    public static int parseBonusNumber(String input) {
+    public static int parseInt(String input) {
         validateNotEmpty(input);
 
-        return parseToInt(input);
-    }
-
-    private static int parseToInt(String input) {
         try {
-            return Integer.parseInt(input);
+            return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 숫자를 입력하세요.");
         }
