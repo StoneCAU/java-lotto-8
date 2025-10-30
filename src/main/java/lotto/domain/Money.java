@@ -5,23 +5,14 @@ public class Money {
     private static final int LOTTO_PRICE = 1000;
     private final int amount;
 
-    public Money(String input) {
-        int value = parseToInt(input);
-        validatePositive(value);
-        validateDivisibleByLottoPrice(value);
-        this.amount = value;
+    public Money(int purchaseAmount) {
+        validatePositive(purchaseAmount);
+        validateDivisibleByLottoPrice(purchaseAmount);
+        this.amount = purchaseAmount;
     }
 
     public int calculateLottoCount() {
         return amount / LOTTO_PRICE;
-    }
-
-    private int parseToInt(String input) {
-        try {
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 금액은 숫자여야 합니다.");
-        }
     }
 
     private void validatePositive(int value) {
