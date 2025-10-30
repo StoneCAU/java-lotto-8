@@ -1,9 +1,11 @@
 package lotto.controller;
 
+import lotto.domain.Lotto;
 import lotto.domain.LottoMachine;
 import lotto.domain.Lottos;
 import lotto.domain.Money;
-import lotto.parser.LottoNumberParser;
+import lotto.parser.InputParser;
+import lotto.validator.BonusNumberValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -30,8 +32,8 @@ public class LottoController {
 
         // 당첨 번호 입력
         String winningNumbersInput = inputView.readWinningNumbers();
-        List<Integer> winningNumbers = LottoNumberParser.parse(winningNumbersInput);
-
+        List<Integer> winningNumbers = InputParser.parseLottoNumbers(winningNumbersInput);
+        Lotto winningLotto = new Lotto(winningNumbers);
 
     }
 }
