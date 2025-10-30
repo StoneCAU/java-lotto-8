@@ -13,7 +13,6 @@ public class OutputView {
     public void printLottos(Lottos lottos) {
         printPurchaseHeader(lottos.getCount());
         printAllLottos(lottos);
-        printNewLine();
     }
 
     private void printPurchaseHeader(int count) {
