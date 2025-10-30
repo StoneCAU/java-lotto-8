@@ -52,6 +52,10 @@ public class OutputView {
                 count);
     }
 
+    public void printProfitRate(double profitRate) {
+        System.out.printf(PROFIT_RATE_FORMAT + NEW_LINE, profitRate);
+    }
+
     private void printNewLine() {
         System.out.print(NEW_LINE);
     }

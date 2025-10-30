@@ -41,5 +41,9 @@ public class LottoController {
         // 당첨 내역 출력
         LottoResult result = lottos.calculateResult(winningLotto, bonusNumber);
         outputView.printResult(result);
+
+        // 수익률 출력
+        double profitRate = money.calculateProfitRate(result.getTotalPrize());
+        outputView.printProfitRate(profitRate);
     }
 }
