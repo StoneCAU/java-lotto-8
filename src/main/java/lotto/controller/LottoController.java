@@ -35,5 +35,9 @@ public class LottoController {
         List<Integer> winningNumbers = InputParser.parseLottoNumbers(winningNumbersInput);
         Lotto winningLotto = new Lotto(winningNumbers);
 
+        // 보너스 번호 입력
+        String bonusNumberInput = inputView.readBonusNumber();
+        int bonusNumber = InputParser.parseBonusNumber(bonusNumberInput);
+        BonusNumberValidator.validate(winningLotto, bonusNumber);
     }
 }
