@@ -15,6 +15,10 @@ public class Money {
         return amount / LOTTO_PRICE;
     }
 
+    public double calculateProfitRate(int totalPrize) {
+        return (double) totalPrize / amount * 100;
+    }
+
     private void validatePositive(int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("[ERROR] 금액은 양수여야 합니다.");
