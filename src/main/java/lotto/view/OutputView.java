@@ -40,9 +40,7 @@ public class OutputView {
         System.out.println(RESULT_HEADER);
         System.out.println(SEPARATOR);
 
-        LottoRank[] ranks = LottoRank.values();
-        for (int i = ranks.length - 1; i >= 0; i--) {
-            LottoRank rank = ranks[i];
+        for (LottoRank rank : LottoRank.values()) {
             printRankResult(rank, result.getCountByRank(rank));
         }
     }
