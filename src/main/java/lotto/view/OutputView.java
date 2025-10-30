@@ -7,13 +7,20 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String NEW_Line = System.lineSeparator();
-    private static final String LOTTO_PURCHASE_MESSAGE = "%d개를 구매했습니다.";
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String PURCHASE_HEADER = NEW_LINE + "%d개를 구매했습니다." + NEW_LINE;
 
     public void printLottos(Lottos lottos) {
+        printPurchaseHeader(lottos.getCount());
+        printAllLottos(lottos);
         printNewLine();
-        System.out.printf(LOTTO_PURCHASE_MESSAGE, lottos.getCount());
-        printNewLine();
+    }
+
+    private void printPurchaseHeader(int count) {
+        System.out.printf(PURCHASE_HEADER, count);
+    }
+
+    private void printAllLottos(Lottos lottos) {
         lottos.toList().forEach(this::printLotto);
     }
 
@@ -25,6 +32,6 @@ public class OutputView {
     }
 
     private void printNewLine() {
-        System.out.print(NEW_Line);
+        System.out.print(NEW_LINE);
     }
 }
