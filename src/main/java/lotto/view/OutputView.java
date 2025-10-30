@@ -40,7 +40,9 @@ public class OutputView {
         System.out.println(RESULT_HEADER);
         System.out.println(SEPARATOR);
 
-        for (LottoRank rank : LottoRank.values()) {
+        LottoRank[] ranks = LottoRank.values();
+        for (int i = ranks.length - 1; i >= 0; i--) {
+            LottoRank rank = ranks[i];
             printRankResult(rank, result.getCountByRank(rank));
         }
     }
@@ -54,9 +56,5 @@ public class OutputView {
 
     public void printProfitRate(double profitRate) {
         System.out.printf(PROFIT_RATE_FORMAT + NEW_LINE, profitRate);
-    }
-
-    private void printNewLine() {
-        System.out.print(NEW_LINE);
     }
 }
