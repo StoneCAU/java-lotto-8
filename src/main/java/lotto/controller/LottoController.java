@@ -3,8 +3,11 @@ package lotto.controller;
 import lotto.domain.LottoMachine;
 import lotto.domain.Lottos;
 import lotto.domain.Money;
+import lotto.parser.LottoNumberParser;
 import lotto.view.InputView;
 import lotto.view.OutputView;
+
+import java.util.List;
 
 public class LottoController {
 
@@ -19,10 +22,16 @@ public class LottoController {
     }
 
     public void run() {
-        // 1. 구매
+        // 로또 구매
         String lottoPurchaseAmount = inputView.readLottoPurchaseAmount();
         Money money = new Money(lottoPurchaseAmount);
         Lottos lottos = lottoMachine.issue(money);
         outputView.printLottos(lottos);
+
+        // 당첨 번호 입력
+        String winningNumbersInput = inputView.readWinningNumbers();
+        List<Integer> winningNumbers = LottoNumberParser.parse(winningNumbersInput);
+
+
     }
 }
