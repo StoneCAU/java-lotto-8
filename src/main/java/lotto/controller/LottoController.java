@@ -32,6 +32,16 @@ public class LottoController {
         printResults(result, money);
     }
 
+    private <T> T retryUntilValid(Supplier<T> task) {
+        while (true) {
+            try {
+                return task.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
     private Money inputPurchaseAmount() {
         return retryUntilValid(() -> {
             String raw = inputView.readLottoPurchaseAmount();
@@ -68,15 +78,5 @@ public class LottoController {
 
         double profitRate = money.calculateProfitRate(result.getTotalPrize());
         outputView.printProfitRate(profitRate);
-    }
-
-    private <T> T retryUntilValid(Supplier<T> task) {
-        while (true) {
-            try {
-                return task.get();
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
     }
 }

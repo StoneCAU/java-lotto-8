@@ -21,14 +21,6 @@ public class OutputView {
         printAllLottos(lottos);
     }
 
-    private void printPurchaseHeader(int count) {
-        System.out.printf(PURCHASE_HEADER, count);
-    }
-
-    private void printAllLottos(Lottos lottos) {
-        lottos.toList().forEach(Lotto::getSortedNumbers);
-    }
-
     public void printResult(LottoResult result) {
         System.out.println(RESULT_HEADER);
         System.out.println(SEPARATOR);
@@ -40,18 +32,26 @@ public class OutputView {
         }
     }
 
-    private void printRankResult(LottoRank rank, int count) {
-        System.out.printf(RANK_FORMAT + NEW_LINE,
-                rank.getDescription(),
-                rank.getPrizeMoney(),
-                count);
-    }
-
     public void printProfitRate(double profitRate) {
         System.out.printf(PROFIT_RATE_FORMAT + NEW_LINE, profitRate);
     }
 
     public void printErrorMessage(String message) {
         System.out.println(message);
+    }
+
+    private void printPurchaseHeader(int count) {
+        System.out.printf(PURCHASE_HEADER, count);
+    }
+
+    private void printAllLottos(Lottos lottos) {
+        lottos.toList().forEach(Lotto::getSortedNumbers);
+    }
+
+    private void printRankResult(LottoRank rank, int count) {
+        System.out.printf(RANK_FORMAT + NEW_LINE,
+                rank.getDescription(),
+                rank.getPrizeMoney(),
+                count);
     }
 }
