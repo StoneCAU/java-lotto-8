@@ -8,7 +8,11 @@ public class LottoMachine {
     private final LottoNumberGenerator generator;
 
     public LottoMachine() {
-        this.generator = new RandomLottoNumberGenerator();
+        this(new RandomLottoNumberGenerator());
+    }
+
+    public LottoMachine(LottoNumberGenerator generator) {
+        this.generator = generator;
     }
 
     public Lottos issue(Money purchaseAmount) {
