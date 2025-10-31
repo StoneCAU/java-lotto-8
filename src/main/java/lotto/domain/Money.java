@@ -27,7 +27,7 @@ public class Money {
 
     private void validateDivisibleByLottoPrice(int value) {
         if (value % LOTTO_PRICE != 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액은 " + LOTTO_PRICE + "원 단위여야 합니다.");
+            throw new IllegalArgumentException(String.format("[ERROR] 구입 금액은 %,d원 단위여야 합니다.", LOTTO_PRICE));
         }
     }
 
