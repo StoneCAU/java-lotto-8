@@ -40,7 +40,9 @@ public class OutputView {
         System.out.println(RESULT_HEADER);
         System.out.println(SEPARATOR);
 
-        for (LottoRank rank : LottoRank.values()) {
+        List<LottoRank> displayOrder = List.of(LottoRank.FIFTH, LottoRank.FOURTH, LottoRank.THIRD, LottoRank.SECOND, LottoRank.FIRST);
+
+        for (LottoRank rank : displayOrder) {
             printRankResult(rank, result.getCountByRank(rank));
         }
     }
