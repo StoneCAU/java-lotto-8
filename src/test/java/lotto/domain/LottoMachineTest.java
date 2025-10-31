@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("LottoMachine 클래스 테스트")
+@DisplayName("LottoMachine 테스트")
 public class LottoMachineTest {
 
     @Nested

@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@DisplayName("LottoResult 클래스 테스트")
+@DisplayName("LottoResult 테스트")
 public class LottoResultTest {
 
     @Nested
