@@ -19,16 +19,11 @@ public enum LottoRank {
     }
 
     public static LottoRank of(int matchCount, boolean hasBonus) {
-        if (matchCount == 5 && hasBonus) {
-            return SECOND;
-        }
-
-        for (LottoRank rank : values()) {
-            if (rank.matchCount == matchCount && rank != SECOND) {
-                return rank;
-            }
-        }
-
+        if (matchCount == FIRST.matchCount) return FIRST;
+        if (matchCount == SECOND.matchCount && hasBonus) return SECOND;
+        if (matchCount == THIRD.matchCount) return THIRD;
+        if (matchCount == FOURTH.matchCount) return FOURTH;
+        if (matchCount == FIFTH.matchCount) return FIFTH;
         return null;
     }
 
