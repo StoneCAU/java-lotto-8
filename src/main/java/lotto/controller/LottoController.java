@@ -7,6 +7,7 @@ import lotto.view.InputView;
 import lotto.view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class LottoController {
 
@@ -32,15 +33,11 @@ public class LottoController {
     }
 
     private Money inputPurchaseAmount() {
-        while (true) {
-            try {
-                String input = inputView.readLottoPurchaseAmount();
-                int amount = InputParser.parseInt(input);
-                return new Money(amount);
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        return retryUntilValid(() -> {
+            String raw = inputView.readLottoPurchaseAmount();
+            int amount = InputParser.parseInt(raw);
+            return new Money(amount);
+        });
     }
 
     private Lottos purchaseLottos(Money money) {
@@ -50,28 +47,20 @@ public class LottoController {
     }
 
     private Lotto inputWinningNumbers() {
-        while (true) {
-            try {
-                String input = inputView.readWinningNumbers();
-                List<Integer> numbers = InputParser.parseNumbers(input);
-                return new Lotto(numbers);
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        return retryUntilValid(() -> {
+            String raw = inputView.readWinningNumbers();
+            List<Integer> nums = InputParser.parseNumbers(raw);
+            return new Lotto(nums);
+        });
     }
 
     private int inputBonusNumber(Lotto winningLotto) {
-        while (true) {
-            try {
-                String input = inputView.readBonusNumber();
-                int bonusNumber = InputParser.parseInt(input);
-                BonusNumberValidator.validate(winningLotto, bonusNumber);
-                return bonusNumber;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        return retryUntilValid(() -> {
+            String raw = inputView.readBonusNumber();
+            int bonus = InputParser.parseInt(raw);
+            BonusNumberValidator.validate(winningLotto, bonus);
+            return bonus;
+        });
     }
 
     private void printResults(LottoResult result, Money money) {
@@ -79,5 +68,15 @@ public class LottoController {
 
         double profitRate = money.calculateProfitRate(result.getTotalPrize());
         outputView.printProfitRate(profitRate);
+    }
+
+    private <T> T retryUntilValid(Supplier<T> task) {
+        while (true) {
+            try {
+                return task.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }
