@@ -23,11 +23,7 @@ public class Lottos {
 
     public LottoResult calculateResult(Lotto winningLotto, int bonusNumber) {
         Map<LottoRank, Integer> rankCounts = lottos.stream()
-                .map(lotto -> {
-                    int matchCount = lotto.countMatches(winningLotto);
-                    boolean hasBonus = lotto.has(bonusNumber);
-                    return LottoRank.of(matchCount, hasBonus);
-                })
+                .map(lotto -> evaluateRank(lotto, winningLotto, bonusNumber))
                 .filter(Objects::nonNull)
                 .collect(Collectors.groupingBy(
                         rank -> rank,
@@ -35,5 +31,11 @@ public class Lottos {
                 ));
 
         return new LottoResult(rankCounts);
+    }
+
+    private LottoRank evaluateRank(Lotto lotto, Lotto winning, int bonus) {
+        int match = lotto.countMatches(winning);
+        boolean hasBonus = lotto.has(bonus);
+        return LottoRank.of(match, hasBonus);
     }
 }
