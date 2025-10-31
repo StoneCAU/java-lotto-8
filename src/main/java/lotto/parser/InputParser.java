@@ -20,7 +20,6 @@ public class InputParser {
 
     public static int parseInt(String input) {
         validateNotEmpty(input);
-
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
