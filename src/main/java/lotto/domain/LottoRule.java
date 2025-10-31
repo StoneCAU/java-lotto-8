@@ -5,5 +5,6 @@ public class LottoRule {
     public static final int MAX_NUMBER = 45;
     public static final int SIZE = 6;
 
-    private LottoRule() {}
+    private LottoRule() {
+    }
 }
