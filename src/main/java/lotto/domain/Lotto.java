@@ -11,8 +11,8 @@ public class Lotto {
         this.numbers = numbers;
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
+    public List<Integer> getSortedNumbers() {
+        return numbers.stream().sorted().toList();
     }
 
     public boolean has(int number) {

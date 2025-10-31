@@ -26,14 +26,7 @@ public class OutputView {
     }
 
     private void printAllLottos(Lottos lottos) {
-        lottos.toList().forEach(this::printLotto);
-    }
-
-    private void printLotto(Lotto lotto) {
-        List<Integer> sortedNumbers = lotto.getNumbers().stream()
-                .sorted()
-                .toList();
-        System.out.println(sortedNumbers);
+        lottos.toList().forEach(Lotto::getSortedNumbers);
     }
 
     public void printResult(LottoResult result) {
