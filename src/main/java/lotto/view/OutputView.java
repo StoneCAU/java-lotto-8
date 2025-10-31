@@ -45,7 +45,11 @@ public class OutputView {
     }
 
     private void printAllLottos(Lottos lottos) {
-        lottos.toList().forEach(Lotto::getSortedNumbers);
+        lottos.toList().forEach(this::printLotto);
+    }
+
+    private void printLotto(Lotto lotto) {
+        System.out.println(lotto.getSortedNumbers());
     }
 
     private void printRankResult(LottoRank rank, int count) {
