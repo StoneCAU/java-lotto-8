@@ -23,7 +23,8 @@ public class LottoController {
 
     public void run() {
         Money money = inputPurchaseAmount();
-        Lottos lottos = purchaseLottos(money);
+        Lottos lottos = lottoMachine.issue(money);
+        outputView.printLottos(lottos);
 
         Lotto winningLotto = inputWinningNumbers();
         int bonusNumber = inputBonusNumber(winningLotto);
@@ -44,32 +45,26 @@ public class LottoController {
 
     private Money inputPurchaseAmount() {
         return retryUntilValid(() -> {
-            String raw = inputView.readLottoPurchaseAmount();
-            int amount = InputParser.parseInt(raw);
+            String input = inputView.readLottoPurchaseAmount();
+            int amount = InputParser.parseInt(input);
             return new Money(amount);
         });
     }
 
-    private Lottos purchaseLottos(Money money) {
-        Lottos lottos = lottoMachine.issue(money);
-        outputView.printLottos(lottos);
-        return lottos;
-    }
-
     private Lotto inputWinningNumbers() {
         return retryUntilValid(() -> {
-            String raw = inputView.readWinningNumbers();
-            List<Integer> nums = InputParser.parseNumbers(raw);
-            return new Lotto(nums);
+            String input = inputView.readWinningNumbers();
+            List<Integer> numbers = InputParser.parseNumbers(input);
+            return new Lotto(numbers);
         });
     }
 
     private int inputBonusNumber(Lotto winningLotto) {
         return retryUntilValid(() -> {
-            String raw = inputView.readBonusNumber();
-            int bonus = InputParser.parseInt(raw);
-            BonusNumberValidator.validate(winningLotto, bonus);
-            return bonus;
+            String input = inputView.readBonusNumber();
+            int bonusNumber = InputParser.parseInt(input);
+            BonusNumberValidator.validate(winningLotto, bonusNumber);
+            return bonusNumber;
         });
     }
 
