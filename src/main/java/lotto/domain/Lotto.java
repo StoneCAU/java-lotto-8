@@ -33,7 +33,7 @@ public class Lotto {
 
     private void validateSize(List<Integer> numbers) {
         if (numbers.size() != LottoRule.SIZE) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 " + LottoRule.SIZE + "개여야 합니다.");
+            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d개여야 합니다.", LottoRule.SIZE));
         }
     }
 
@@ -42,7 +42,7 @@ public class Lotto {
                 .anyMatch(number -> number < LottoRule.MIN_NUMBER || number > LottoRule.MAX_NUMBER);
 
         if (hasInvalidNumber) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 " + LottoRule.MIN_NUMBER + "부터 " + LottoRule.MAX_NUMBER + " 사이의 숫자여야 합니다.");
+            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.", LottoRule.MIN_NUMBER, LottoRule.MAX_NUMBER));
         }
     }
 
