@@ -24,7 +24,6 @@ public class Lottos {
     public LottoResult calculateResult(Lotto winningLotto, int bonusNumber) {
         Map<LottoRank, Integer> rankCounts = lottos.stream()
                 .map(lotto -> evaluateRank(lotto, winningLotto, bonusNumber))
-                .filter(Objects::nonNull)
                 .collect(Collectors.groupingBy(
                         rank -> rank,
                         Collectors.summingInt(rank -> 1)
