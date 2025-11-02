@@ -1,12 +1,12 @@
 package lotto.controller;
 
+import lotto.domain.BonusNumber;
 import lotto.domain.Lotto;
 import lotto.domain.LottoMachine;
+import lotto.domain.LottoResult;
 import lotto.domain.Lottos;
 import lotto.domain.Money;
-import lotto.domain.LottoResult;
 import lotto.parser.InputParser;
-import lotto.validator.BonusNumberValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -31,7 +31,7 @@ public class LottoController {
         outputView.printLottos(lottos);
 
         Lotto winningLotto = inputWinningNumbers();
-        int bonusNumber = inputBonusNumber(winningLotto);
+        BonusNumber bonusNumber = inputBonusNumber(winningLotto);
 
         LottoResult result = lottos.calculateResult(winningLotto, bonusNumber);
         printResults(result, money);
@@ -50,7 +50,8 @@ public class LottoController {
     private Money inputPurchaseAmount() {
         return retryUntilValid(() -> {
             String input = inputView.readLottoPurchaseAmount();
-            int amount = InputParser.parseInt(input);
+            int amount = InputParser.parseSingleNumber(input);
+
             return new Money(amount);
         });
     }
@@ -59,16 +60,17 @@ public class LottoController {
         return retryUntilValid(() -> {
             String input = inputView.readWinningNumbers();
             List<Integer> numbers = InputParser.parseNumbers(input);
+
             return new Lotto(numbers);
         });
     }
 
-    private int inputBonusNumber(Lotto winningLotto) {
+    private BonusNumber inputBonusNumber(Lotto winningLotto) {
         return retryUntilValid(() -> {
             String input = inputView.readBonusNumber();
-            int bonusNumber = InputParser.parseInt(input);
-            BonusNumberValidator.validate(winningLotto, bonusNumber);
-            return bonusNumber;
+            int bonus = InputParser.parseSingleNumber(input);
+
+            return new BonusNumber(bonus, winningLotto);
         });
     }
 
