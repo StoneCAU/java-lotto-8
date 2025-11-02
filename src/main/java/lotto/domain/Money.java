@@ -3,6 +3,7 @@ package lotto.domain;
 public class Money {
 
     private static final int LOTTO_PRICE = 1_000;
+
     private final int amount;
 
     public Money(int amount) {
@@ -30,5 +31,4 @@ public class Money {
             throw new IllegalArgumentException(String.format("[ERROR] 구입 금액은 %,d원 단위여야 합니다.", LOTTO_PRICE));
         }
     }
-
 }
