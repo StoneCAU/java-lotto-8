@@ -20,7 +20,7 @@ public class Lottos {
         return lottos;
     }
 
-    public LottoResult calculateResult(Lotto winningLotto, int bonusNumber) {
+    public LottoResult calculateResult(Lotto winningLotto, BonusNumber bonusNumber) {
         Map<LottoRank, Integer> rankCounts = lottos.stream()
                 .map(lotto -> evaluateRank(lotto, winningLotto, bonusNumber))
                 .collect(Collectors.groupingBy(
@@ -31,9 +31,9 @@ public class Lottos {
         return new LottoResult(rankCounts);
     }
 
-    private LottoRank evaluateRank(Lotto lotto, Lotto winning, int bonus) {
-        int match = lotto.countMatches(winning);
-        boolean hasBonus = lotto.has(bonus);
+    private LottoRank evaluateRank(Lotto lotto, Lotto winningLotto, BonusNumber bonusNumber) {
+        int match = lotto.countMatches(winningLotto);
+        boolean hasBonus = lotto.has(bonusNumber.getValue());
         return LottoRank.of(match, hasBonus);
     }
 }
