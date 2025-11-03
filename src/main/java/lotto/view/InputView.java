@@ -11,18 +11,22 @@ public class InputView {
 
     public String readLottoPurchaseAmount() {
         System.out.println(LOTTO_PURCHASE_AMOUNT_INPUT_MESSAGE);
-        return Console.readLine();
+        return readLine();
     }
 
     public String readWinningNumbers() {
         printNewLine();
         System.out.println(WINNING_NUMBERS_INPUT_MESSAGE);
-        return Console.readLine();
+        return readLine();
     }
 
     public String readBonusNumber() {
         printNewLine();
         System.out.println(BONUS_NUMBER_INPUT_MESSAGE);
+        return readLine();
+    }
+
+    private String readLine() {
         return Console.readLine();
     }
 
