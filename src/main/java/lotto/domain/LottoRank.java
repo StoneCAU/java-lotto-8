@@ -7,7 +7,8 @@ public enum LottoRank {
     THIRD(5, 1_500_000, "5개 일치"),
     FOURTH(4, 50_000, "4개 일치"),
     FIFTH(3, 5_000, "3개 일치"),
-    NONE(0, 0, "꽝");
+    NONE(0, 0, "꽝"),
+    ;
 
     private final int matchCount;
     private final int prizeMoney;
@@ -20,11 +21,11 @@ public enum LottoRank {
     }
 
     public static LottoRank of(int matchCount, boolean hasBonus) {
-        if (matchCount == FIRST.matchCount) return FIRST;
-        if (matchCount == SECOND.matchCount && hasBonus) return SECOND;
-        if (matchCount == THIRD.matchCount) return THIRD;
-        if (matchCount == FOURTH.matchCount) return FOURTH;
-        if (matchCount == FIFTH.matchCount) return FIFTH;
+        if (matchCount == 6) return FIRST;
+        if (matchCount == 5 && hasBonus) return SECOND;
+        if (matchCount == 5) return THIRD;
+        if (matchCount == 4) return FOURTH;
+        if (matchCount == 3) return FIFTH;
         return NONE;
     }
 
