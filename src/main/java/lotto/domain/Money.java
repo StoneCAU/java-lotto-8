@@ -2,8 +2,6 @@ package lotto.domain;
 
 public class Money {
 
-    private static final int LOTTO_PRICE = 1_000;
-
     private final int amount;
 
     public Money(int amount) {
@@ -13,7 +11,7 @@ public class Money {
     }
 
     public int calculateLottoCount() {
-        return amount / LOTTO_PRICE;
+        return amount / LottoConstants.LOTTO_PRICE;
     }
 
     public double calculateProfitRate(int totalPrize) {
@@ -27,8 +25,8 @@ public class Money {
     }
 
     private void validateDivisibleByLottoPrice(int value) {
-        if (value % LOTTO_PRICE != 0) {
-            throw new IllegalArgumentException(String.format("[ERROR] 구입 금액은 %,d원 단위여야 합니다.", LOTTO_PRICE));
+        if (value % LottoConstants.LOTTO_PRICE != 0) {
+            throw new IllegalArgumentException(String.format("[ERROR] 구입 금액은 %,d원 단위여야 합니다.", LottoConstants.LOTTO_PRICE));
         }
     }
 }

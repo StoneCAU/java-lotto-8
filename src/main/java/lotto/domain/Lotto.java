@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Lotto {
 
-    private static final int LOTTO_SIZE = 6;
-
     private final List<LottoNumber> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -44,8 +42,8 @@ public class Lotto {
     }
 
     private void validateSize(List<LottoNumber> numbers) {
-        if (numbers.size() != LOTTO_SIZE) {
-            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d개여야 합니다.", LOTTO_SIZE));
+        if (numbers.size() != LottoConstants.LOTTO_SIZE) {
+            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d개여야 합니다.", LottoConstants.LOTTO_SIZE));
         }
     }
 

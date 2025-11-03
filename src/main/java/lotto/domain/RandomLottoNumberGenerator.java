@@ -8,6 +8,6 @@ public class RandomLottoNumberGenerator implements LottoNumberGenerator {
 
     @Override
     public List<Integer> generate() {
-        return Randoms.pickUniqueNumbersInRange(LottoRule.MIN_NUMBER, LottoRule.MAX_NUMBER, LottoRule.SIZE);
+        return Randoms.pickUniqueNumbersInRange(LottoConstants.MIN_NUMBER, LottoConstants.MAX_NUMBER, LottoConstants.LOTTO_SIZE);
     }
 }
