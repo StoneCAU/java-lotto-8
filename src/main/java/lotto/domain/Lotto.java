@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Lotto {
 
+    private static final String ERROR_INVALID_SIZE = "[ERROR] 로또 번호는 %d개여야 합니다.";
+    private static final String ERROR_DUPLICATE_NUMBER = "[ERROR] 로또 번호는 중복될 수 없습니다.";
+
     private final List<LottoNumber> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -22,7 +25,6 @@ public class Lotto {
 
     public boolean has(int number) {
         LottoNumber target = new LottoNumber(number);
-
         return numbers.contains(target);
     }
 
@@ -46,13 +48,13 @@ public class Lotto {
 
     private void validateSize(List<LottoNumber> numbers) {
         if (numbers.size() != LottoConstants.LOTTO_SIZE) {
-            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d개여야 합니다.", LottoConstants.LOTTO_SIZE));
+            throw new IllegalArgumentException(String.format(ERROR_INVALID_SIZE, LottoConstants.LOTTO_SIZE));
         }
     }
 
     private void validateNotDuplicate(List<LottoNumber> numbers) {
         if (numbers.size() != new HashSet<>(numbers).size()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 중복될 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
     }
 }
