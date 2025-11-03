@@ -15,6 +15,7 @@ public class LottoResult {
         for (LottoRank rank : LottoRank.values()) {
             result.put(rank, rankCounts.getOrDefault(rank, 0));
         }
+
         return result;
     }
 

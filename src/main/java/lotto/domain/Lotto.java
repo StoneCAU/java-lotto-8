@@ -27,6 +27,7 @@ public class Lotto {
 
     public boolean has(int number) {
         LottoNumber target = new LottoNumber(number);
+
         return numbers.contains(target);
     }
 

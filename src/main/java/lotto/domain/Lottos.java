@@ -34,6 +34,7 @@ public class Lottos {
     private LottoRank evaluateRank(Lotto lotto, Lotto winningLotto, BonusNumber bonusNumber) {
         int match = lotto.countMatches(winningLotto);
         boolean hasBonus = lotto.has(bonusNumber.getValue());
+
         return LottoRank.of(match, hasBonus);
     }
 }
