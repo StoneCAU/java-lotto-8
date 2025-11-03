@@ -89,12 +89,12 @@
 
 ### ✅ 당첨 번호 관리
 - [x] `Lotto` 객체를 재사용하여 당첨 번호 6개 관리
-- [x] 보너스 번호를 `int`로 관리
+- [x] `BonusNumber` 객체로 보너스 번호 관리
 
 ### ✅ 당첨 판정
 - [x] 로또 번호와 당첨 번호를 비교하여 일치 개수 계산
 - [x] 5개 일치 시 보너스 번호 포함 여부 확인
-- [x] 일치 개수와 보너스 일치 여부로 `LottoRank` 판정
+- [x] 일치 개수와 보너스로 `LottoRank` 판정
 - [x] `LottoRank`에서 등급별 당첨 조건과 상금 관리
   - 1등: 6개 일치 / 2,000,000,000원
   - 2등: 5개 일치 + 보너스 일치 / 30,000,000원
@@ -158,30 +158,29 @@
 ### 클래스 다이어그램
 ```
 ┌──────────────┐
-│ Application  │ 프로그램 진입점
+│ Application  │
 └──────┬───────┘
        │
        ▼
 ┌──────────────────┐
-│ LottoController  │ 게임 흐름 제어
+│ LottoController  │  ← (입출력 흐름 제어)
 └──────┬───────────┘
        │
-       ├──────────┬──────────┬────────────┬────────────┐
-       ▼          ▼          ▼            ▼            ▼
-  InputView  OutputView  LottoMachine   Money    InputParser
-                            │
-                            ├──────┬──────────┐
-                            ▼      ▼          ▼
-                         Lottos  Lotto  LottoNumberGenerator
-                                   │           │
-                                   │           ▼
-                                   │    RandomLottoNumberGenerator
-                                   │
-                                   ▼
-                              LottoResult
-                                   │
-                                   ▼
-                              LottoRank
+       ├───────────────┬───────────────┬──────────────┬──────────────┐
+       ▼               ▼               ▼              ▼              ▼
+  InputView       OutputView       LottoMachine      Money       InputParser
+                                       │
+                                       ▼
+                             ┌───────────────┬───────────────┐
+                             ▼               ▼               ▼
+                          Lottos           Lotto       BonusNumber
+                             │                │
+                             ▼                ▼
+                       LottoResult       LottoNumber (record)
+                             │
+                             ▼
+                         LottoRank
+
 ```
 
 ### 📦 클래스별 책임
@@ -194,13 +193,13 @@
 | **OutputView** | 출력 담당 | • 구매한 로또 출력<br>• 당첨 통계 출력<br>• 수익률 출력<br>• 에러 메시지 출력 |
 | **LottoMachine** | 로또 발행 | • 구입 금액에 따른 로또 발행<br>• 번호 생성 전략 사용 |
 | **Lottos** | 로또 컬렉션 관리 | • 여러 로또 관리<br>• 전체 당첨 결과 계산 |
-| **Lotto** | 개별 로또 | • 로또 번호 6개 관리<br>• 번호 검증 (6개, 1~45, 중복 없음)<br>• 당첨 번호와 일치 개수 계산<br>• 오름차순 정렬 |
+| **Lotto** | 개별 로또 | • 로또 번호 6개 관리<br>• 번호 검증 (6개, 중복 없음)<br>• 당첨 번호와 일치 개수 계산<br>• 오름차순 정렬 |
+| **LottoNumber** | 로또 번호 값 객체 (record) | • 단일 로또 번호 표현<br>• 번호 범위 검증 (1~45)<br>• 불변성 보장 |
+| **BonusNumber** | 보너스 번호 값 객체 | • 보너스 번호 표현<br>• 번호 범위 검증 (1~45)<br>• 당첨 번호와 중복 검증 |
 | **Money** | 구입 금액 관리 | • 금액 검증 (양수, 1,000원 단위)<br>• 로또 구매 개수 계산<br>• 수익률 계산 |
 | **LottoResult** | 당첨 결과 관리 | • 등급별 당첨 개수 집계<br>• 총 상금 계산 |
 | **LottoRank** | 당첨 등급 관리 (Enum) | • 등급별 당첨 조건 정의<br>• 등급별 상금 관리<br>• 일치 개수와 보너스로 등급 판정 |
-| **LottoRule** | 로또 규칙 상수 | • 번호 범위 (1~45)<br>• 로또 크기 (6개) |
 | **InputParser** | 입력 파싱 | • 쉼표로 분리<br>• 숫자 변환<br>• 공백 제거 |
-| **BonusNumberValidator** | 보너스 번호 검증 | • 범위 검증 (1~45)<br>• 당첨 번호와 중복 검증 |
 | **LottoNumberGenerator** | 번호 생성 전략 (Interface) | • 테스트를 위한 추상화 |
 | **RandomLottoNumberGenerator** | 랜덤 번호 생성 | • `Randoms.pickUniqueNumbersInRange()` 사용 |
 
@@ -216,17 +215,19 @@
    - Money 생성 (검증: 양수, 1,000원 단위)
    - LottoMachine: 로또 발행
      → RandomLottoNumberGenerator: 8개의 로또 번호 생성
-     → Lotto 객체 8개 생성 (각각 검증: 6개, 1~45, 중복 없음)
+     → 각 번호를 LottoNumber로 변환 (검증: 1~45)
+     → Lotto 객체 8개 생성 (검증: 6개, 중복 없음)
      → Lottos로 관리
    - OutputView: 구매한 로또 출력 (오름차순 정렬)
               ↓
 3. LottoController - 당첨 번호 입력
    - InputView: 당첨 번호 입력 → "1,2,3,4,5,6"
    - InputParser: 파싱 → [1, 2, 3, 4, 5, 6]
+   - 각 번호를 LottoNumber로 변환
    - Lotto 생성 (검증 포함)
    - InputView: 보너스 번호 입력 → "7"
    - InputParser: 숫자 변환 → 7
-   - BonusNumberValidator: 보너스 번호 검증 (1~45, 당첨 번호와 중복 없음)
+   - BonusNumber 생성 (검증: 1~45, 당첨 번호와 중복 없음)
               ↓
 4. LottoController - 당첨 판정
    - Lottos: 전체 로또 당첨 결과 계산
