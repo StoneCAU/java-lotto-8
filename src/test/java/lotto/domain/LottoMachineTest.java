@@ -8,8 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("LottoMachine 테스트")
-public class LottoMachineTest {
+class LottoMachineTest {
 
     @Nested
     @DisplayName("로또 발행 시")
@@ -30,22 +29,25 @@ public class LottoMachineTest {
             LottoMachine machine = new LottoMachine(new FixedLottoNumberGenerator(List.of(1, 2, 3, 4, 5, 6)));
             Lottos lottos = machine.issue(new Money(3000));
 
-            for (Lotto lotto : lottos.toList()) {
+            lottos.toList().forEach(lotto -> {
                 List<Integer> numbers = lotto.getSortedNumbers();
                 assertThat(numbers)
                         .hasSize(6)
                         .doesNotHaveDuplicates();
-            }
+            });
         }
 
         @Test
-        @DisplayName("사용자 정의 번호 생성기를 주입하면 해당 생성기로 발행된다")
+        @DisplayName("주입된 번호 생성기를 사용하여 로또를 발행한다")
         void issueWithCustomGenerator() {
             LottoNumberGenerator customGenerator = () -> List.of(10, 11, 12, 13, 14, 15);
             LottoMachine machine = new LottoMachine(customGenerator);
             Lottos lottos = machine.issue(new Money(1000));
 
-            List<Integer> numbers = lottos.toList().getFirst().getSortedNumbers();
+            List<Integer> numbers = lottos.toList()
+                    .getFirst()
+                    .getSortedNumbers();
+
             assertThat(numbers).containsExactly(10, 11, 12, 13, 14, 15);
         }
     }
