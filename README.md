@@ -199,6 +199,7 @@
 | **Money** | 구입 금액 관리 | • 금액 검증 (양수, 1,000원 단위)<br>• 로또 구매 개수 계산<br>• 수익률 계산 |
 | **LottoResult** | 당첨 결과 관리 | • 등급별 당첨 개수 집계<br>• 총 상금 계산 |
 | **LottoRank** | 당첨 등급 관리 (Enum) | • 등급별 당첨 조건 정의<br>• 등급별 상금 관리<br>• 일치 개수와 보너스로 등급 판정 |
+| **LottoConstants** | 로또 게임 규칙 상수 | • 번호 범위 (1~45)<br>• 로또 크기 (6개)<br>• 로또 가격 (1,000원) |
 | **InputParser** | 입력 파싱 | • 쉼표로 분리<br>• 숫자 변환<br>• 공백 제거 |
 | **LottoNumberGenerator** | 번호 생성 전략 (Interface) | • 테스트를 위한 추상화 |
 | **RandomLottoNumberGenerator** | 랜덤 번호 생성 | • `Randoms.pickUniqueNumbersInRange()` 사용 |
