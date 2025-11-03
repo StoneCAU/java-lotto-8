@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RandomLottoNumberGeneratorTest {
 
@@ -17,8 +18,10 @@ class RandomLottoNumberGeneratorTest {
     void generateSixUniqueNumbers() {
         List<Integer> numbers = generator.generate();
 
-        assertThat(numbers).hasSize(6);
-        assertThat(new HashSet<>(numbers)).hasSize(6);
+        assertAll(
+                () -> assertThat(numbers).hasSize(6),
+                () -> assertThat(new HashSet<>(numbers)).hasSize(6)
+        );
     }
 
     @Test
