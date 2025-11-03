@@ -8,10 +8,7 @@ public class Lotto {
     private final List<LottoNumber> numbers;
 
     public Lotto(List<Integer> numbers) {
-        List<LottoNumber> lottoNumbers = numbers.stream()
-                .map(LottoNumber::new)
-                .toList();
-
+        List<LottoNumber> lottoNumbers = toLottoNumbers(numbers);
         validate(lottoNumbers);
         this.numbers = lottoNumbers;
     }
@@ -34,6 +31,12 @@ public class Lotto {
                 .map(LottoNumber::value)
                 .filter(winningLotto::has)
                 .count();
+    }
+
+    private List<LottoNumber> toLottoNumbers(List<Integer> numbers) {
+        return numbers.stream()
+                .map(LottoNumber::new)
+                .toList();
     }
 
     private void validate(List<LottoNumber> numbers) {
