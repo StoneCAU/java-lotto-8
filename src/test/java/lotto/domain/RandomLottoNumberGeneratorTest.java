@@ -7,10 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-@DisplayName("RandomLottoNumberGenerator 테스트")
-public class RandomLottoNumberGeneratorTest {
+class RandomLottoNumberGeneratorTest {
 
     private final RandomLottoNumberGenerator generator = new RandomLottoNumberGenerator();
 
@@ -19,14 +17,12 @@ public class RandomLottoNumberGeneratorTest {
     void generateSixUniqueNumbers() {
         List<Integer> numbers = generator.generate();
 
-        assertAll(
-                () -> assertThat(numbers).hasSize(6),
-                () -> assertThat(new HashSet<>(numbers)).hasSize(6)  // 중복 없음
-        );
+        assertThat(numbers).hasSize(6);
+        assertThat(new HashSet<>(numbers)).hasSize(6);
     }
 
     @Test
-    @DisplayName("번호는 1부터 45 사이의 범위 내에 포함된다")
+    @DisplayName("생성된 번호는 1부터 45 사이의 범위 내에 포함된다")
     void numbersAreWithinValidRange() {
         List<Integer> numbers = generator.generate();
 
