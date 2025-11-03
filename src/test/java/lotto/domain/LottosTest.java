@@ -25,8 +25,10 @@ class LottosTest {
                 new Lotto(List.of(7, 8, 9, 10, 11, 12))
         ));
 
-        assertThat(lottos).isNotNull();
-        assertThat(lottos.getCount()).isEqualTo(2);
+        assertAll(
+                () -> assertThat(lottos).isNotNull(),
+                () -> assertThat(lottos.getCount()).isEqualTo(2)
+        );
     }
 
     @Test
